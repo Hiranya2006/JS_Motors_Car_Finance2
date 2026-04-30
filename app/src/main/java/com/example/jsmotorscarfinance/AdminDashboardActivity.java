@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.jsmotorscarfinance.database.DatabaseHelper;
 
 public class AdminDashboardActivity extends AppCompatActivity {
 
@@ -24,7 +23,6 @@ public class AdminDashboardActivity extends AppCompatActivity {
         });
 
         btnViewApplications.setOnClickListener(v -> {
-            // Reusing ViewStatusActivity logic or creating a dedicated one
             Intent intent = new Intent(this, ViewStatusActivity.class);
             intent.putExtra("IS_ADMIN", true);
             startActivity(intent);

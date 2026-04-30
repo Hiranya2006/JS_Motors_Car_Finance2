@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class CustomerDashboardActivity extends AppCompatActivity {
 
     private TextView tvWelcome;
-    private View btnBrowse, btnViewStatus, btnMakePayment, btnLogout;
+    private View btnBrowse, btnViewStatus, btnMakePayment, btnLogout, btnPaymentPlan;
     private int userId;
     private String userName;
 
@@ -25,6 +25,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         btnBrowse = findViewById(R.id.btnBrowseVehicles);
         btnViewStatus = findViewById(R.id.btnViewStatus);
         btnMakePayment = findViewById(R.id.btnMakePayment);
+        btnPaymentPlan = findViewById(R.id.btnPaymentPlan);
         btnLogout = findViewById(R.id.btnLogout);
 
         if (userName != null) {
@@ -39,6 +40,12 @@ public class CustomerDashboardActivity extends AppCompatActivity {
 
         btnViewStatus.setOnClickListener(v -> {
             Intent intent = new Intent(this, ViewStatusActivity.class);
+            intent.putExtra("USER_ID", userId);
+            startActivity(intent);
+        });
+
+        btnPaymentPlan.setOnClickListener(v -> {
+            Intent intent = new Intent(this, PaymentScheduleActivity.class);
             intent.putExtra("USER_ID", userId);
             startActivity(intent);
         });

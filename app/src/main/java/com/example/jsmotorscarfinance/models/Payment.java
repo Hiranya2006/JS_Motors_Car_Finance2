@@ -3,6 +3,7 @@ package com.example.jsmotorscarfinance.models;
 public class Payment {
     private int id;
     private int userId;
+    private String userName;
     private double amount;
     private String date;
 
@@ -19,6 +20,8 @@ public class Payment {
     public void setId(int id) { this.id = id; }
     public int getUserId() { return userId; }
     public void setUserId(int userId) { this.userId = userId; }
+    public String getUserName() { return userName; }
+    public void setUserName(String userName) { this.userName = userName; }
     public double getAmount() { return amount; }
     public void setAmount(double amount) { this.amount = amount; }
     public String getDate() { return date; }
