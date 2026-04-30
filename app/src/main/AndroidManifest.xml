@@ -32,8 +32,7 @@
         <activity android:name=".PaymentScheduleActivity" />
         <activity android:name=".SetLoanTermsActivity" />
         <activity android:name=".MakePaymentActivity" />
-        <activity android:name=".ReportsActivity" />
-        <activity android:name=".SystemMonitorActivity" />
+        <activity android:name=".ViewPaymentsActivity" />
         
     </application>
 

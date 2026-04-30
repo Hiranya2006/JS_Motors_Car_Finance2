@@ -9,52 +9,70 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="@color/secondary"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Agent Workspace"
+            app:title="AGENT WORKSPACE"
             app:titleCentered="true"
-            app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge" />
+            app:titleTextColor="@color/primary"
+            app:titleTextAppearance="@style/Carmoola.TitleLarge" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pending Reviews"
-            android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-            android:textColor="@color/primary"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvAgentLoans"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="8dp"
-            android:clipToPadding="false"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnLogoutAgent"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign Out"
-            android:layout_margin="24dp"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:textColor="@color/error"
-            app:strokeColor="@color/error"/>
+            android:orientation="vertical"
+            android:padding="16dp">
 
-    </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewPaymentsAgent"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:text="VIEW CUSTOMER PAYMENTS"
+                android:textStyle="bold"
+                app:cornerRadius="32dp"
+                android:backgroundTint="@color/primary"
+                android:textColor="@color/secondary"
+                app:icon="@drawable/ic_attach_money_24"
+                app:iconTint="@color/secondary"
+                android:layout_marginBottom="24dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pending Reviews"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                android:textColor="@color/secondary"
+                android:layout_marginBottom="8dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAgentLoans"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_loan"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogoutAgent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sign Out"
+                android:layout_marginTop="32dp"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:textColor="@color/error"
+                app:strokeColor="@color/error"
+                app:cornerRadius="24dp"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

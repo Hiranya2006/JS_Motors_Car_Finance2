@@ -2,6 +2,7 @@ package com.example.jsmotorscarfinance;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +18,7 @@ public class FinanceAgentDashboardActivity extends AppCompatActivity implements 
     private RecyclerView rvAgentLoans;
     private LoanAdapter adapter;
     private DatabaseHelper dbHelper;
-    private Button btnLogoutAgent;
+    private Button btnLogoutAgent, btnViewPaymentsAgent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +28,14 @@ public class FinanceAgentDashboardActivity extends AppCompatActivity implements 
         dbHelper = new DatabaseHelper(this);
         rvAgentLoans = findViewById(R.id.rvAgentLoans);
         btnLogoutAgent = findViewById(R.id.btnLogoutAgent);
+        btnViewPaymentsAgent = findViewById(R.id.btnViewPaymentsAgent);
 
         rvAgentLoans.setLayoutManager(new LinearLayoutManager(this));
         loadApplications();
+
+        btnViewPaymentsAgent.setOnClickListener(v -> {
+            startActivity(new Intent(this, ViewPaymentsActivity.class));
+        });
 
         btnLogoutAgent.setOnClickListener(v -> {
             startActivity(new Intent(this, LoginActivity.class));
@@ -38,16 +44,13 @@ public class FinanceAgentDashboardActivity extends AppCompatActivity implements 
     }
 
     private void loadApplications() {
-        // Finance agents view all applications
         List<Loan> loanList = dbHelper.getAllLoans();
-        // Fixed: Passing "Finance Agent" string to match the LoanAdapter constructor
         adapter = new LoanAdapter(loanList, "Finance Agent", this);
         rvAgentLoans.setAdapter(adapter);
     }
 
     @Override
     public void onApprove(Loan loan) {
-        // For Finance Agent, "Approve" means setting terms
         Intent intent = new Intent(this, SetLoanTermsActivity.class);
         intent.putExtra("LOAN_ID", loan.getId());
         startActivity(intent);
@@ -63,6 +66,6 @@ public class FinanceAgentDashboardActivity extends AppCompatActivity implements 
     @Override
     protected void onResume() {
         super.onResume();
-        loadApplications(); // Refresh when returning from SetTermsActivity
+        loadApplications();
     }
 }

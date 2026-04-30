@@ -91,55 +91,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="32dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="2dp"
-                app:strokeColor="@color/secondary"
-                app:cardBackgroundColor="@color/white">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="24dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Operations"
-                        android:textColor="@color/secondary"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
-                        android:layout_marginBottom="16dp"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnGenerateReports"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:text="Financial Reports"
-                        style="@style/Widget.Material3.Button.TextButton"
-                        android:textColor="@color/secondary"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp"
-                        app:icon="@drawable/ic_attach_money_24"
-                        app:iconTint="@color/secondary"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnSystemActivities"
-                        android:layout_width="match_parent"
-                        android:layout_height="56dp"
-                        android:text="Monitor Activity"
-                        style="@style/Widget.Material3.Button.TextButton"
-                        android:textColor="@color/secondary"
-                        android:textStyle="bold"
-                        app:icon="@drawable/ic_upload_file_24"
-                        app:iconTint="@color/secondary"/>
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogoutAdmin"
                 android:layout_width="match_parent"

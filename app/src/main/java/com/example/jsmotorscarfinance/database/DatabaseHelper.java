@@ -16,7 +16,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "JSMotors.db";
     private static final int DATABASE_VERSION = 8;
-
     private static final String TABLE_USER = "user";
     private static final String TABLE_ADMIN = "admin";
     private static final String TABLE_AGENT = "agent";
@@ -61,7 +60,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_LOAN_APP_REPAYMENT_PERIOD = "repaymentPeriod";
     private static final String KEY_LOAN_APP_MONTHLY_INSTALLMENT = "monthlyInstallment";
     private static final String KEY_LOAN_APP_STATUS = "status";
-    
     private static final String KEY_PAYMENT_ID = "paymentid";
     private static final String KEY_PAYMENT_USER_ID = "userid";
     private static final String KEY_PAYMENT_AMOUNT = "amount";
@@ -313,6 +311,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         List<Payment> list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.query(TABLE_PAYMENTS, null, KEY_PAYMENT_USER_ID + "=?", new String[]{String.valueOf(userId)}, null, null, KEY_PAYMENT_ID + " DESC");
+        if (c.moveToFirst()) {
+            do {
+                list.add(new Payment(c.getInt(0), c.getInt(1), c.getDouble(2), c.getString(3)));
+            } while (c.moveToNext());
+        }
+        c.close();
+        return list;
+    }
+
+    public List<Payment> getAllPayments() {
+        List<Payment> list = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(TABLE_PAYMENTS, null, null, null, null, null, KEY_PAYMENT_ID + " DESC");
         if (c.moveToFirst()) {
             do {
                 list.add(new Payment(c.getInt(0), c.getInt(1), c.getDouble(2), c.getString(3)));

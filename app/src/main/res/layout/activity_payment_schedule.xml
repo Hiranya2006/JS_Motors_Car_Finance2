@@ -9,64 +9,98 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="@color/secondary"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Payment Schedule"
+            app:title="Payment Details"
             app:titleCentered="true"
-            app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge" />
+            app:titleTextColor="@color/primary"
+            app:titleTextAppearance="@style/Carmoola.TitleLarge" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:cardCornerRadius="24dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/primaryContainer">
+            android:orientation="vertical"
+            android:padding="16dp">
 
+            <!-- Summary Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/white"
+                android:layout_marginBottom="16dp">
+
+                <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:stretchColumns="1">
+
+                    <TableRow android:padding="8dp">
+                        <TextView android:text="Total Price" android:textStyle="bold" android:textColor="@color/secondary"/>
+                        <TextView android:id="@+id/tvSummaryTotal" android:text="Rs 0.00" android:gravity="end" android:textColor="@color/secondary"/>
+                    </TableRow>
+                    <View android:layout_height="1dp" android:background="#EEEEEE"/>
+                    <TableRow android:padding="8dp">
+                        <TextView android:text="Amount Paid" android:textStyle="bold" android:textColor="@color/secondary"/>
+                        <TextView android:id="@+id/tvSummaryPaid" android:text="Rs 0.00" android:gravity="end" android:textColor="@color/secondary"/>
+                    </TableRow>
+                    <View android:layout_height="1dp" android:background="#EEEEEE"/>
+                    <TableRow android:padding="8dp">
+                        <TextView android:text="Outstanding" android:textStyle="bold" android:textColor="@color/secondary"/>
+                        <TextView android:id="@+id/tvSummaryOutstanding" android:text="Rs 0.00" android:gravity="end" android:textColor="@color/secondary"/>
+                    </TableRow>
+                    <View android:layout_height="1dp" android:background="#EEEEEE"/>
+                    <TableRow android:padding="8dp">
+                        <TextView android:text="Interest Rate" android:textStyle="bold" android:textColor="@color/secondary"/>
+                        <TextView android:id="@+id/tvSummaryInterest" android:text="0%" android:gravity="end" android:textColor="@color/secondary"/>
+                    </TableRow>
+
+                </TableLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Due Payments"
+                android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
+                android:textColor="@color/secondary"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"/>
+
+            <!-- Table Header -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Plan Overview"
-                    android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-                    android:textColor="@color/onPrimaryContainer"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="60 Months Installments"
-                    android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
-                    android:textColor="@color/onPrimaryContainer"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"/>
-
+                android:orientation="horizontal"
+                android:background="#D1E9F6"
+                android:padding="8dp">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.2" android:text="Due Date" android:textStyle="bold" android:textSize="12sp"/>
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1.5" android:text="Description" android:textStyle="bold" android:textSize="12sp"/>
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Amount" android:textStyle="bold" android:textSize="12sp"/>
+                <TextView android:layout_width="40dp" android:layout_height="wrap_content" android:text="" />
             </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSchedule"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-            android:clipToPadding="false"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSchedule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_payment"/>
 
-    </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
