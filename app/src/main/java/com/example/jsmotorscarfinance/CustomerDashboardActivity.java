@@ -2,14 +2,14 @@ package com.example.jsmotorscarfinance;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class CustomerDashboardActivity extends AppCompatActivity {
 
     private TextView tvWelcome;
-    private Button btnBrowse, btnViewStatus, btnViewSchedule, btnMakePayment, btnLogout;
+    private View btnBrowse, btnViewStatus, btnMakePayment, btnLogout;
     private int userId;
     private String userName;
 
@@ -24,11 +24,12 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         tvWelcome = findViewById(R.id.tvWelcome);
         btnBrowse = findViewById(R.id.btnBrowseVehicles);
         btnViewStatus = findViewById(R.id.btnViewStatus);
-        btnViewSchedule = findViewById(R.id.btnViewSchedule);
         btnMakePayment = findViewById(R.id.btnMakePayment);
         btnLogout = findViewById(R.id.btnLogout);
 
-        tvWelcome.setText("Welcome, " + userName + "!");
+        if (userName != null) {
+            tvWelcome.setText("Hi, " + userName + "!");
+        }
 
         btnBrowse.setOnClickListener(v -> {
             Intent intent = new Intent(this, BrowseVehiclesActivity.class);
@@ -42,18 +43,16 @@ public class CustomerDashboardActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        btnViewSchedule.setOnClickListener(v -> {
-            Intent intent = new Intent(this, PaymentScheduleActivity.class);
-            startActivity(intent);
-        });
-
         btnMakePayment.setOnClickListener(v -> {
             Intent intent = new Intent(this, MakePaymentActivity.class);
+            intent.putExtra("USER_ID", userId);
             startActivity(intent);
         });
 
         btnLogout.setOnClickListener(v -> {
-            startActivity(new Intent(this, LoginActivity.class));
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
             finish();
         });
     }

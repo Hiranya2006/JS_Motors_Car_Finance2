@@ -15,6 +15,22 @@
         <item name="colorOnSurface">@color/onSurface</item>
         <item name="colorError">@color/error</item>
         <item name="colorOnError">@color/onError</item>
+
+        <!-- Customizing for Carmoola style -->
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="textAppearanceTitleLarge">@style/Carmoola.TitleLarge</item>
+        <item name="textAppearanceHeadlineLarge">@style/Carmoola.HeadlineLarge</item>
+    </style>
+
+    <style name="Carmoola.TitleLarge" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/secondary</item>
+    </style>
+
+    <style name="Carmoola.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/secondary</item>
+        <item name="android:textSize">34sp</item>
     </style>
 
     <style name="Theme.JSMotorsCarFinance" parent="Base.Theme.JSMotorsCarFinance" />

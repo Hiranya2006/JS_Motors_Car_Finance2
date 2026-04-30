@@ -39,25 +39,26 @@ public class LoginActivity extends AppCompatActivity {
 
             User user = dbHelper.loginUser(email, password);
             if (user != null) {
-                Toast.makeText(this, "Welcome " + user.getRole(), Toast.LENGTH_SHORT).show();
+                String role = user.getRole();
+                Toast.makeText(this, "Welcome " + role, Toast.LENGTH_SHORT).show();
+                
                 Intent intent;
-                switch (user.getRole()) {
-                    case "Admin":
-                        intent = new Intent(this, AdminDashboardActivity.class);
-                        break;
-                    case "Finance Agent":
-                        intent = new Intent(this, FinanceAgentDashboardActivity.class);
-                        break;
-                    default:
-                        intent = new Intent(this, CustomerDashboardActivity.class);
-                        break;
+                if ("Admin".equalsIgnoreCase(role)) {
+                    intent = new Intent(this, AdminDashboardActivity.class);
+                } else if ("Finance Agent".equalsIgnoreCase(role)) {
+                    intent = new Intent(this, FinanceAgentDashboardActivity.class);
+                } else {
+                    // Default to Customer Dashboard for all other cases
+                    intent = new Intent(this, CustomerDashboardActivity.class);
                 }
+
                 intent.putExtra("USER_ID", user.getId());
                 intent.putExtra("USER_NAME", user.getName());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
             } else {
-                Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Invalid email or password", Toast.LENGTH_SHORT).show();
             }
         });
 

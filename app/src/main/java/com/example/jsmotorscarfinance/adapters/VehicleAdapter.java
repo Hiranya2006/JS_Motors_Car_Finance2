@@ -4,9 +4,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 import com.example.jsmotorscarfinance.R;
 import com.example.jsmotorscarfinance.models.Vehicle;
 import java.util.List;
@@ -39,8 +41,20 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
         Vehicle v = vehicleList.get(position);
         holder.tvName.setText(v.getName());
         holder.tvSpecs.setText(v.getSpecs());
-        holder.tvPrice.setText("Price: $" + String.format("%.2f", v.getPrice()));
+        holder.tvPrice.setText("$" + String.format("%.2f", v.getPrice()));
         holder.btnAction.setText(actionText);
+        
+        // Use Glide to load the car image
+        if (v.getImageUrl() != null && !v.getImageUrl().isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                    .load(v.getImageUrl())
+                    .placeholder(R.drawable.ic_directions_car_24)
+                    .error(R.drawable.ic_directions_car_24)
+                    .into(holder.ivVehicle);
+        } else {
+            holder.ivVehicle.setImageResource(R.drawable.ic_directions_car_24);
+        }
+
         holder.btnAction.setOnClickListener(view -> listener.onVehicleClick(v));
     }
 
@@ -51,12 +65,15 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
 
     static class VehicleViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvSpecs, tvPrice;
+        ImageView ivVehicle;
         Button btnAction;
+        
         public VehicleViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tvVehicleName);
             tvSpecs = itemView.findViewById(R.id.tvVehicleSpecs);
             tvPrice = itemView.findViewById(R.id.tvVehiclePrice);
+            ivVehicle = itemView.findViewById(R.id.ivVehicleImage);
             btnAction = itemView.findViewById(R.id.btnAction);
         }
     }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/secondary"
     android:padding="24dp">
 
     <LinearLayout
@@ -12,46 +12,42 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/loginCard"
-        app:layout_constraintVertical_chainStyle="packed">
+        android:gravity="start"
+        android:layout_marginTop="64dp"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="JS Motors"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+            android:textAppearance="@style/Carmoola.HeadlineLarge"
             android:textColor="@color/primary"
-            android:textStyle="bold" />
+            android:textSize="42sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Premium Car Finance"
-            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-            android:textColor="@color/secondary"
-            android:letterSpacing="0.1" />
+            android:text="Car finance, simplified."
+            android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+            android:textColor="@color/white"
+            android:layout_marginTop="8dp" />
     </LinearLayout>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/loginCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:cardCornerRadius="28dp"
+        android:layout_marginTop="48dp"
+        app:cardCornerRadius="32dp"
         app:cardElevation="0dp"
-        app:strokeWidth="1dp"
-        app:strokeColor="@color/secondaryContainer"
         app:cardBackgroundColor="@color/surface"
-        app:layout_constraintTop_toBottomOf="@id/header"
-        app:layout_constraintBottom_toTopOf="@id/tvRegister">
+        app:layout_constraintTop_toBottomOf="@id/header">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="28dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -59,14 +55,16 @@
                 android:hint="Email"
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_marginBottom="16dp"
-                app:startIconDrawable="@drawable/ic_email_24"
-                app:startIconTint="@color/primary">
+                app:boxStrokeColor="@color/secondary"
+                app:hintTextColor="@color/secondary"
+                app:startIconDrawable="@drawable/ic_email_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"/>
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/secondary"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -76,22 +74,28 @@
                 style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                 android:layout_marginBottom="24dp"
                 app:passwordToggleEnabled="true"
-                app:startIconDrawable="@drawable/ic_lock_24"
-                app:startIconTint="@color/primary">
+                app:boxStrokeColor="@color/secondary"
+                app:hintTextColor="@color/secondary"
+                app:startIconDrawable="@drawable/ic_lock_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword"
+                    android:textColor="@color/secondary"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogin"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="Sign In"
-                app:cornerRadius="16dp"
+                android:layout_height="64dp"
+                android:text="SIGN IN"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                app:cornerRadius="32dp"
+                android:backgroundTint="@color/primary"
+                android:textColor="@color/secondary"
                 style="@style/Widget.Material3.Button" />
 
         </LinearLayout>
@@ -101,13 +105,13 @@
         android:id="@+id/tvRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="New here? Create an Account"
-        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+        android:layout_marginBottom="32dp"
+        android:text="New to JS Motors? Create account"
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
         android:textColor="@color/primary"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/loginCard"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,22 +3,24 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     
-    <!-- Modern 2026 Palette -->
-    <color name="primary">#6750A4</color>
-    <color name="onPrimary">#FFFFFF</color>
-    <color name="primaryContainer">#EADDFF</color>
-    <color name="onPrimaryContainer">#21005D</color>
+    <!-- Carmoola-Inspired Palette -->
+    <color name="primary">#D1FF00</color> <!-- Lime Green -->
+    <color name="onPrimary">#301934</color> <!-- Deep Purple -->
+    <color name="primaryContainer">#E6FF80</color>
+    <color name="onPrimaryContainer">#301934</color>
     
-    <color name="secondary">#625B71</color>
+    <color name="secondary">#301934</color> <!-- Deep Purple -->
     <color name="onSecondary">#FFFFFF</color>
-    <color name="secondaryContainer">#E8DEF8</color>
-    <color name="onSecondaryContainer">#1D192B</color>
+    <color name="secondaryContainer">#4A2D4F</color>
+    <color name="onSecondaryContainer">#FFFFFF</color>
     
-    <color name="background">#FEF7FF</color>
-    <color name="onBackground">#1D1B20</color>
-    <color name="surface">#FEF7FF</color>
-    <color name="onSurface">#1D1B20</color>
+    <color name="accent">#FF3BFF</color> <!-- Hot Pink -->
     
-    <color name="error">#B3261E</color>
+    <color name="background">#F7F3F9</color>
+    <color name="onBackground">#301934</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="onSurface">#301934</color>
+    
+    <color name="error">#FF4B4B</color>
     <color name="onError">#FFFFFF</color>
 </resources>

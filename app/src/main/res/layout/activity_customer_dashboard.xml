@@ -9,16 +9,17 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="@color/secondary"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Customer Hub"
+            app:title="JS MOTORS"
             app:titleCentered="true"
-            app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge" />
+            app:titleTextColor="@color/primary"
+            app:titleTextAppearance="@style/Carmoola.TitleLarge" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -36,107 +37,133 @@
                 android:id="@+id/tvWelcome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Welcome Back!"
-                android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-                android:textColor="@color/onBackground"
+                android:text="Hi, User!"
+                android:textAppearance="@style/Carmoola.HeadlineLarge"
+                android:textSize="28sp"
                 android:layout_marginBottom="24dp"/>
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="28dp"
+                app:cardCornerRadius="32dp"
                 app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/secondaryContainer"
-                app:cardBackgroundColor="@color/surface">
+                app:cardBackgroundColor="@color/secondary"
+                android:layout_marginBottom="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="24dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Loan Services"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                        android:textColor="@color/primary"
+                        android:text="Ready for a new ride?"
+                        android:textColor="@color/white"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                         android:layout_marginBottom="16dp"/>
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnBrowseVehicles"
                         android:layout_width="match_parent"
                         android:layout_height="64dp"
-                        android:text="Browse Vehicles"
-                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:text="BROWSE CARS"
+                        android:textStyle="bold"
+                        app:cornerRadius="32dp"
+                        android:backgroundTint="@color/primary"
+                        android:textColor="@color/secondary"
                         app:icon="@drawable/ic_directions_car_24"
-                        android:layout_marginBottom="12dp"
-                        app:cornerRadius="16dp"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnViewStatus"
-                        android:layout_width="match_parent"
-                        android:layout_height="64dp"
-                        android:text="Track Status"
-                        style="@style/Widget.Material3.Button.TonalButton"
-                        app:icon="@drawable/ic_upload_file_24"
-                        app:cornerRadius="16dp"/>
+                        app:iconTint="@color/secondary"/>
 
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:cardCornerRadius="28dp"
-                app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/secondaryContainer"
-                app:cardBackgroundColor="@color/surface">
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="2dp"
+                    app:strokeColor="@color/secondary"
+                    app:cardBackgroundColor="@color/white">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Payments"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                        android:textColor="@color/primary"
-                        android:layout_marginBottom="16dp"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnViewSchedule"
+                    <LinearLayout
+                        android:id="@+id/btnViewStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Repayment Schedule"
-                        style="@style/Widget.Material3.Button.TextButton"
-                        android:layout_marginBottom="8dp"/>
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_upload_file_24"
+                            app:tint="@color/secondary"
+                            android:layout_marginBottom="8dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Loan Status"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondary"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-                    <com.google.android.material.button.MaterialButton
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="8dp"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="2dp"
+                    app:strokeColor="@color/secondary"
+                    app:cardBackgroundColor="@color/white">
+
+                    <LinearLayout
                         android:id="@+id/btnMakePayment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Make a Payment"
-                        style="@style/Widget.Material3.Button.TextButton"/>
-
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:clickable="true"
+                        android:focusable="true">
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_attach_money_24"
+                            app:tint="@color/secondary"
+                            android:layout_marginBottom="8dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Payments"
+                            android:textStyle="bold"
+                            android:textColor="@color/secondary"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sign Out"
-                android:layout_marginTop="32dp"
+                android:text="SIGN OUT"
+                android:layout_marginTop="48dp"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:textColor="@color/error"
-                app:strokeColor="@color/error" />
+                app:strokeColor="@color/error"
+                app:cornerRadius="24dp"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
