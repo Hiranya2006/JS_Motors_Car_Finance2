@@ -156,6 +156,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    public User getUserById(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_USER, null, KEY_USER_ID + "=?", new String[]{String.valueOf(userId)}, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            User u = new User(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), "Customer");
+            cursor.close();
+            return u;
+        }
+        if (cursor != null) cursor.close();
+        return null;
+    }
+
+    public int updateUser(int userId, String name, String email, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_USER_NAME, name);
+        values.put(KEY_USER_EMAIL, email);
+        values.put(KEY_USER_PASSWORD, password);
+        return db.update(TABLE_USER, values, KEY_USER_ID + "=?", new String[]{String.valueOf(userId)});
+    }
+
     public List<Vehicle> getAllVehicles() {
         List<Vehicle> list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -206,25 +227,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(KEY_CUST_USER_ID, loan.getUserId());
         cv.put(KEY_CUST_VEHICLE_ID, 1);
-        cv.put(KEY_CUST_INTEREST_RATE, 5.0);
+        cv.put(KEY_CUST_INTEREST_RATE, 0.0);
         cv.put(KEY_CUST_TOTAL_PRICE, loan.getAmount());
         cv.put(KEY_CUST_PAYMENT_LEFT, loan.getAmount());
         cv.put(KEY_CUST_PAYMENT_PAID, 0.0);
         long custId = db.insert(TABLE_CUSTOMER_DB, null, cv);
+        
         ContentValues v = new ContentValues();
         v.put(KEY_LOAN_APP_CUST_ID, custId);
-        v.put(KEY_LOAN_APP_INTEREST_RATE, 5.0);
-        v.put(KEY_LOAN_APP_REPAYMENT_PERIOD, 60);
-        v.put(KEY_LOAN_APP_MONTHLY_INSTALLMENT, loan.getAmount() / 60);
-        v.put(KEY_LOAN_APP_STATUS, "Pending");
+        v.put(KEY_LOAN_APP_INTEREST_RATE, 0.0);
+        v.put(KEY_LOAN_APP_REPAYMENT_PERIOD, 0);
+        v.put(KEY_LOAN_APP_MONTHLY_INSTALLMENT, 0.0);
+        v.put(KEY_LOAN_APP_STATUS, "Pending Approval");
         return db.insert(TABLE_LOAN_APPLICATION, null, v);
     }
 
     public void uploadDocument(int loanId, String docName, String docPath) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor c = db.rawQuery("SELECT userid FROM customer_db WHERE customerid = (SELECT customerid FROM loan_application WHERE applicationid = ?)", new String[]{String.valueOf(loanId)});
+        Cursor c = db.rawQuery("SELECT " + KEY_LOAN_APP_CUST_ID + " FROM " + TABLE_LOAN_APPLICATION + " WHERE " + KEY_LOAN_APP_ID + " = ?", new String[]{String.valueOf(loanId)});
         int userId = -1;
-        if(c.moveToFirst()) userId = c.getInt(0);
+        if(c.moveToFirst()) {
+            int custId = c.getInt(0);
+            Cursor c2 = db.rawQuery("SELECT " + KEY_CUST_USER_ID + " FROM " + TABLE_CUSTOMER_DB + " WHERE " + KEY_CUST_ID + " = ?", new String[]{String.valueOf(custId)});
+            if(c2.moveToFirst()) userId = c2.getInt(0);
+            c2.close();
+        }
         c.close();
         ContentValues v = new ContentValues();
         v.put(KEY_DOC_USER_ID, userId);
@@ -238,7 +265,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public List<String> getDocumentsForLoan(int loanId) {
         List<String> docs = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT payslip FROM documents WHERE userid = (SELECT userid FROM customer_db WHERE customerid = (SELECT customerid FROM loan_application WHERE applicationid = ?))", new String[]{String.valueOf(loanId)});
+        String query = "SELECT payslip FROM documents WHERE userid = (SELECT userid FROM customer_db WHERE customerid = (SELECT customerid FROM loan_application WHERE applicationid = ?))";
+        Cursor c = db.rawQuery(query, new String[]{String.valueOf(loanId)});
         if (c.moveToFirst()) {
             do {
                 docs.add("Document: " + c.getString(0));
@@ -251,7 +279,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public List<Loan> getAllLoans() {
         List<Loan> loans = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT la.applicationid, c.userid, la.status, la.monthlyInstallment * la.repaymentPeriod as total FROM " + TABLE_LOAN_APPLICATION + " la JOIN " + TABLE_CUSTOMER_DB + " c ON la.customerid = c.customerid";
+        String query = "SELECT la.applicationid, c.userid, la.status, c.totalPrice FROM " + TABLE_LOAN_APPLICATION + " la JOIN " + TABLE_CUSTOMER_DB + " c ON la.customerid = c.customerid";
         Cursor c = db.rawQuery(query, null);
         if (c.moveToFirst()) {
             do {
@@ -266,7 +294,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public List<Loan> getLoansByUser(int userId) {
         List<Loan> loans = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT la.applicationid, c.userid, la.status, c.totalPrice, la.IntrestRate, la.repaymentPeriod, la.monthlyInstallment FROM " + TABLE_LOAN_APPLICATION + " la JOIN " + TABLE_CUSTOMER_DB + " c ON la.customerid = c.customerid WHERE c.userid = ?";
+        String query = "SELECT la.applicationid, c.userid, la.status, c.totalPrice, la.IntrestRate, la.repaymentPeriod, la.monthlyInstallment, c.paymentPaid, c.paymentLeft FROM " + TABLE_LOAN_APPLICATION + " la JOIN " + TABLE_CUSTOMER_DB + " c ON la.customerid = c.customerid WHERE c.userid = ?";
         Cursor c = db.rawQuery(query, new String[]{String.valueOf(userId)});
         if (c.moveToFirst()) {
             do {
@@ -274,6 +302,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 l.setInterestRate(c.getDouble(4));
                 l.setRepaymentPeriod(c.getInt(5));
                 l.setInstallmentAmount(c.getDouble(6));
+                l.setPaidAmount(c.getDouble(7));
+                l.setRemainingAmount(c.getDouble(8));
                 loans.add(l);
             } while (c.moveToNext());
         }
@@ -281,20 +311,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return loans;
     }
 
-    public void updateLoanStatus(int loanId, String status) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues v = new ContentValues();
-        v.put(KEY_LOAN_APP_STATUS, status);
-        db.update(TABLE_LOAN_APPLICATION, v, KEY_LOAN_APP_ID + "=?", new String[]{String.valueOf(loanId)});
-    }
-
     public void setLoanTerms(int loanId, double interest, int period, double installment) {
         SQLiteDatabase db = this.getWritableDatabase();
+        double totalRepayment = installment * period;
+        
+        // 1. Update Loan Application
         ContentValues v = new ContentValues();
         v.put(KEY_LOAN_APP_INTEREST_RATE, interest);
         v.put(KEY_LOAN_APP_REPAYMENT_PERIOD, period);
         v.put(KEY_LOAN_APP_MONTHLY_INSTALLMENT, installment);
         v.put(KEY_LOAN_APP_STATUS, "Approved");
+        db.update(TABLE_LOAN_APPLICATION, v, KEY_LOAN_APP_ID + "=?", new String[]{String.valueOf(loanId)});
+        
+        // 2. Update Customer Balance to reflect total including interest
+        Cursor c = db.rawQuery("SELECT " + KEY_LOAN_APP_CUST_ID + " FROM " + TABLE_LOAN_APPLICATION + " WHERE " + KEY_LOAN_APP_ID + " = ?", new String[]{String.valueOf(loanId)});
+        if (c.moveToFirst()) {
+            int custId = c.getInt(0);
+            ContentValues cv = new ContentValues();
+            cv.put(KEY_CUST_TOTAL_PRICE, totalRepayment);
+            cv.put(KEY_CUST_PAYMENT_LEFT, totalRepayment);
+            cv.put(KEY_CUST_INTEREST_RATE, interest);
+            db.update(TABLE_CUSTOMER_DB, cv, KEY_CUST_ID + "=?", new String[]{String.valueOf(custId)});
+        }
+        c.close();
+    }
+
+    public void updateLoanBalance(int userId, double amount) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("UPDATE " + TABLE_CUSTOMER_DB + " SET " + KEY_CUST_PAYMENT_PAID + " = " + KEY_CUST_PAYMENT_PAID + " + ?, " + KEY_CUST_PAYMENT_LEFT + " = " + KEY_CUST_PAYMENT_LEFT + " - ? WHERE " + KEY_CUST_USER_ID + " = ?", new Object[]{amount, amount, userId});
+        
+        // Check if fully paid
+        Cursor c = db.rawQuery("SELECT " + KEY_CUST_PAYMENT_LEFT + ", " + KEY_CUST_ID + " FROM " + TABLE_CUSTOMER_DB + " WHERE " + KEY_CUST_USER_ID + " = ?", new String[]{String.valueOf(userId)});
+        if (c.moveToFirst()) {
+            double left = c.getDouble(0);
+            int custId = c.getInt(1);
+            if (left <= 0.05) { // Small buffer for double math
+                db.execSQL("UPDATE " + TABLE_LOAN_APPLICATION + " SET " + KEY_LOAN_APP_STATUS + " = 'Fully Paid' WHERE " + KEY_LOAN_APP_CUST_ID + " = ?", new Object[]{custId});
+            }
+        }
+        c.close();
+    }
+
+    public void updateLoanStatus(int loanId, String status) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues v = new ContentValues();
+        v.put(KEY_LOAN_APP_STATUS, status);
         db.update(TABLE_LOAN_APPLICATION, v, KEY_LOAN_APP_ID + "=?", new String[]{String.valueOf(loanId)});
     }
     
@@ -304,20 +365,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         v.put(KEY_PAYMENT_USER_ID, payment.getUserId());
         v.put(KEY_PAYMENT_AMOUNT, payment.getAmount());
         v.put(KEY_PAYMENT_DATE, payment.getDate());
-        return db.insert(TABLE_PAYMENTS, null, v);
-    }
-
-    public List<Payment> getPaymentsByUser(int userId) {
-        List<Payment> list = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.query(TABLE_PAYMENTS, null, KEY_PAYMENT_USER_ID + "=?", new String[]{String.valueOf(userId)}, null, null, KEY_PAYMENT_ID + " DESC");
-        if (c.moveToFirst()) {
-            do {
-                list.add(new Payment(c.getInt(0), c.getInt(1), c.getDouble(2), c.getString(3)));
-            } while (c.moveToNext());
+        long result = db.insert(TABLE_PAYMENTS, null, v);
+        if (result != -1) {
+            updateLoanBalance(payment.getUserId(), payment.getAmount());
         }
-        c.close();
-        return list;
+        return result;
     }
 
     public List<Payment> getAllPayments() {

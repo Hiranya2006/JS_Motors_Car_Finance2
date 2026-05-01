@@ -33,6 +33,7 @@
         <activity android:name=".SetLoanTermsActivity" />
         <activity android:name=".MakePaymentActivity" />
         <activity android:name=".ViewPaymentsActivity" />
+        <activity android:name=".ProfileActivity" />
         
     </application>
 

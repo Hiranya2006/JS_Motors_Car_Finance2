@@ -9,6 +9,8 @@ public class Loan {
     private double interestRate;
     private int repaymentPeriod; // months
     private double installmentAmount;
+    private double paidAmount;
+    private double remainingAmount;
 
     public Loan(int id, int userId, String vehicleName, double amount, String status) {
         this.id = id;
@@ -37,4 +39,8 @@ public class Loan {
     public void setRepaymentPeriod(int repaymentPeriod) { this.repaymentPeriod = repaymentPeriod; }
     public double getInstallmentAmount() { return installmentAmount; }
     public void setInstallmentAmount(double installmentAmount) { this.installmentAmount = installmentAmount; }
+    public double getPaidAmount() { return paidAmount; }
+    public void setPaidAmount(double paidAmount) { this.paidAmount = paidAmount; }
+    public double getRemainingAmount() { return remainingAmount; }
+    public void setRemainingAmount(double remainingAmount) { this.remainingAmount = remainingAmount; }
 }

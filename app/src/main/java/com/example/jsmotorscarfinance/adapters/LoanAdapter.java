@@ -1,5 +1,6 @@
 package com.example.jsmotorscarfinance.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,9 @@ import java.util.List;
 
 public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.LoanViewHolder> {
 
-    private List<Loan> loanList;
-    private String userRole;
-    private OnLoanActionListener actionListener;
+    private final List<Loan> loanList;
+    private final String userRole;
+    private final OnLoanActionListener actionListener;
     private DatabaseHelper dbHelper;
 
     public interface OnLoanActionListener {
@@ -44,23 +45,29 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.LoanViewHolder
     @Override
     public void onBindViewHolder(@NonNull LoanViewHolder holder, int position) {
         Loan loan = loanList.get(position);
+        Context context = holder.itemView.getContext();
+
         holder.tvVehicleName.setText(loan.getVehicleName());
-        holder.tvLoanAmount.setText("Amount: $" + String.format("%.2f", loan.getAmount()));
-        holder.tvStatus.setText("Status: " + loan.getStatus());
+        
+        // Using string resources with placeholders to avoid lint errors and support localization
+        holder.tvLoanAmount.setText(context.getString(R.string.loan_amount_label, loan.getAmount()));
+        holder.tvStatus.setText(context.getString(R.string.loan_status_label, loan.getStatus()));
 
         holder.adminControls.setVisibility(View.GONE);
         
-        if (userRole.equals("Admin") || userRole.equals("Finance Agent")) {
+        if ("Admin".equals(userRole) || "Finance Agent".equals(userRole)) {
             holder.adminControls.setVisibility(View.VISIBLE);
             
-            // Logic for visibility of Approve/Reject based on status
-            if (loan.getStatus().equals("Pending") || loan.getStatus().equals("Forwarded")) {
-                holder.btnApprove.setVisibility(View.VISIBLE);
-                holder.btnReject.setVisibility(View.VISIBLE);
-            } else {
-                holder.btnApprove.setVisibility(View.GONE);
-                holder.btnReject.setVisibility(View.GONE);
+            // Visibility logic: Admin reviews "Pending Approval", Agents review "Forwarded"
+            boolean canAction = false;
+            if ("Admin".equals(userRole) && "Pending Approval".equalsIgnoreCase(loan.getStatus())) {
+                canAction = true;
+            } else if ("Finance Agent".equals(userRole) && "Forwarded".equalsIgnoreCase(loan.getStatus())) {
+                canAction = true;
             }
+
+            holder.btnApprove.setVisibility(canAction ? View.VISIBLE : View.GONE);
+            holder.btnReject.setVisibility(canAction ? View.VISIBLE : View.GONE);
 
             holder.btnApprove.setOnClickListener(v -> actionListener.onApprove(loan));
             holder.btnReject.setOnClickListener(v -> actionListener.onReject(loan));
@@ -68,14 +75,14 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.LoanViewHolder
             holder.btnViewDocs.setOnClickListener(v -> {
                 List<String> docs = dbHelper.getDocumentsForLoan(loan.getId());
                 if (docs.isEmpty()) {
-                    Toast.makeText(v.getContext(), "No documents uploaded", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, R.string.no_docs_found, Toast.LENGTH_SHORT).show();
                 } else {
                     StringBuilder sb = new StringBuilder();
                     for (String d : docs) sb.append(d).append("\n");
-                    new AlertDialog.Builder(v.getContext())
-                            .setTitle("Uploaded Documents")
+                    new AlertDialog.Builder(context)
+                            .setTitle(R.string.uploaded_docs_title)
                             .setMessage(sb.toString())
-                            .setPositiveButton("OK", null)
+                            .setPositiveButton(R.string.ok, null)
                             .show();
                 }
             });

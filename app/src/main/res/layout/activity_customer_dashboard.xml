@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
@@ -16,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="JS MOTORS"
+            app:title="@string/app_name"
             app:titleCentered="true"
             app:titleTextColor="@color/primary"
             app:titleTextAppearance="@style/Carmoola.TitleLarge" />
@@ -37,7 +36,7 @@
                 android:id="@+id/tvWelcome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hi, User!"
+                android:text="@string/welcome_user_default"
                 android:textAppearance="@style/Carmoola.HeadlineLarge"
                 android:textSize="28sp"
                 android:layout_marginBottom="24dp"/>
@@ -59,7 +58,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ready for a new ride?"
+                        android:text="@string/ready_new_ride"
                         android:textColor="@color/white"
                         android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
                         android:layout_marginBottom="16dp"/>
@@ -68,7 +67,7 @@
                         android:id="@+id/btnBrowseVehicles"
                         android:layout_width="match_parent"
                         android:layout_height="64dp"
-                        android:text="BROWSE CARS"
+                        android:text="@string/browse_cars"
                         android:textStyle="bold"
                         app:cornerRadius="32dp"
                         android:backgroundTint="@color/primary"
@@ -97,27 +96,20 @@
                     app:strokeColor="@color/secondary"
                     app:cardBackgroundColor="@color/white">
 
-                    <LinearLayout
+                    <TextView
                         android:id="@+id/btnViewStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:gravity="center"
                         android:padding="20dp"
                         android:clickable="true"
-                        android:focusable="true">
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_upload_file_24"
-                            app:tint="@color/secondary"
-                            android:layout_marginBottom="8dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Loan Status"
-                            android:textStyle="bold"
-                            android:textColor="@color/secondary"/>
-                    </LinearLayout>
+                        android:focusable="true"
+                        android:text="@string/loan_status"
+                        android:textStyle="bold"
+                        android:textColor="@color/secondary"
+                        app:drawableTopCompat="@drawable/ic_upload_file_24"
+                        app:drawableTint="@color/secondary"
+                        android:drawablePadding="8dp" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -131,27 +123,20 @@
                     app:strokeColor="@color/secondary"
                     app:cardBackgroundColor="@color/white">
 
-                    <LinearLayout
+                    <TextView
                         android:id="@+id/btnPaymentPlan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:gravity="center"
                         android:padding="20dp"
                         android:clickable="true"
-                        android:focusable="true">
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_attach_money_24"
-                            app:tint="@color/secondary"
-                            android:layout_marginBottom="8dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Payment Plan"
-                            android:textStyle="bold"
-                            android:textColor="@color/secondary"/>
-                    </LinearLayout>
+                        android:focusable="true"
+                        android:text="@string/payment_plan"
+                        android:textStyle="bold"
+                        android:textColor="@color/secondary"
+                        app:drawableTopCompat="@drawable/ic_attach_money_24"
+                        app:drawableTint="@color/secondary"
+                        android:drawablePadding="8dp" />
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
@@ -165,27 +150,47 @@
                     app:strokeColor="@color/secondary"
                     app:cardBackgroundColor="@color/white">
 
-                    <LinearLayout
+                    <TextView
                         android:id="@+id/btnMakePayment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
+                        android:gravity="center"
                         android:padding="20dp"
                         android:clickable="true"
-                        android:focusable="true">
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_attach_money_24"
-                            app:tint="@color/secondary"
-                            android:layout_marginBottom="8dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Pay Now"
-                            android:textStyle="bold"
-                            android:textColor="@color/secondary"/>
-                    </LinearLayout>
+                        android:focusable="true"
+                        android:text="@string/pay_now"
+                        android:textStyle="bold"
+                        android:textColor="@color/secondary"
+                        app:drawableTopCompat="@drawable/ic_attach_money_24"
+                        app:drawableTint="@color/secondary"
+                        android:drawablePadding="8dp" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    app:cardCornerRadius="24dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="2dp"
+                    app:strokeColor="@color/secondary"
+                    app:cardBackgroundColor="@color/white">
+
+                    <TextView
+                        android:id="@+id/btnSettings"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="20dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:text="@string/profile"
+                        android:textStyle="bold"
+                        android:textColor="@color/secondary"
+                        app:drawableTopCompat="@drawable/ic_settings_24"
+                        app:drawableTint="@color/secondary"
+                        android:drawablePadding="8dp" />
                 </com.google.android.material.card.MaterialCardView>
 
             </GridLayout>
@@ -194,7 +199,7 @@
                 android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SIGN OUT"
+                android:text="@string/sign_out"
                 android:layout_marginTop="48dp"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:textColor="@color/error"

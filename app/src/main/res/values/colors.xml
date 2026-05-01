@@ -3,24 +3,24 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     
-    <!-- Carmoola-Inspired Palette -->
-    <color name="primary">#D1FF00</color> <!-- Lime Green -->
-    <color name="onPrimary">#301934</color> <!-- Deep Purple -->
-    <color name="primaryContainer">#E6FF80</color>
-    <color name="onPrimaryContainer">#301934</color>
+    <!-- Warmer Carmoola-Inspired Palette -->
+    <color name="primary">#FFC107</color> <!-- Amber -->
+    <color name="onPrimary">#3E2723</color> <!-- Deep Brown -->
+    <color name="primaryContainer">#FFECB3</color>
+    <color name="onPrimaryContainer">#3E2723</color>
     
-    <color name="secondary">#301934</color> <!-- Deep Purple -->
+    <color name="secondary">#5D4037</color> <!-- Brown -->
     <color name="onSecondary">#FFFFFF</color>
-    <color name="secondaryContainer">#4A2D4F</color>
-    <color name="onSecondaryContainer">#FFFFFF</color>
+    <color name="secondaryContainer">#D7CCC8</color>
+    <color name="onSecondaryContainer">#3E2723</color>
     
-    <color name="accent">#FF3BFF</color> <!-- Hot Pink -->
+    <color name="accent">#FF7043</color> <!-- Coral / Warm Orange -->
     
-    <color name="background">#F7F3F9</color>
-    <color name="onBackground">#301934</color>
+    <color name="background">#FFFCF5</color> <!-- Warm Cream -->
+    <color name="onBackground">#3E2723</color>
     <color name="surface">#FFFFFF</color>
-    <color name="onSurface">#301934</color>
+    <color name="onSurface">#3E2723</color>
     
-    <color name="error">#FF4B4B</color>
+    <color name="error">#E53935</color>
     <color name="onError">#FFFFFF</color>
 </resources>

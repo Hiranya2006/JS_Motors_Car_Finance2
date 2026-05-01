@@ -1,3 +1,25 @@
 <resources>
     <string name="app_name">JS MOTORS</string>
+    <string name="welcome_user_format">Hi, %s!</string>
+    <string name="welcome_user_default">Hi, User!</string>
+    <string name="ready_new_ride">Ready for a new ride?</string>
+    <string name="browse_cars">BROWSE CARS</string>
+    <string name="loan_status">Loan Status</string>
+    <string name="payment_plan">Payment Plan</string>
+    <string name="pay_now">Pay Now</string>
+    <string name="profile">Profile</string>
+    <string name="sign_out">SIGN OUT</string>
+    
+    <!-- Loan Process Strings -->
+    <string name="loan_amount_label">Amount: Rs %,.2f</string>
+    <string name="loan_status_label">Status: %s</string>
+    <string name="uploaded_docs_title">Uploaded Documents</string>
+    <string name="no_docs_found">No documents found for this application.</string>
+    <string name="ok">OK</string>
+    
+    <!-- Payment Restrictions -->
+    <string name="err_loan_not_approved">Payments are disabled until your loan is Approved.</string>
+    <string name="err_payment_plan_not_ready">Payment plan will be available once your loan is Approved.</string>
+    <string name="payment_success">Payment of Rs %s successful!</string>
+    <string name="payment_failed">Payment failed. Please try again.</string>
 </resources>
