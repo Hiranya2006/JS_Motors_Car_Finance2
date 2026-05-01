@@ -1,7 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.JSMotorsCarFinance" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Warm Dark Theme Overrides -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/onPrimary</item>
+        <item name="colorSecondary">#D7CCC8</item> <!-- Lighter Warm Brown for Dark Mode -->
+        <item name="colorOnSecondary">#3E2723</item>
+        <item name="android:windowBackground">#1B1412</item> <!-- Deep Warm Black/Brown -->
+        <item name="colorSurface">#261D1A</item> <!-- Warm Dark Surface -->
+        <item name="colorOnSurface">#FFECB3</item>
     </style>
 </resources>
