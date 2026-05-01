@@ -4,13 +4,13 @@ public class Loan {
     private int id;
     private int userId;
     private String vehicleName;
-    private double amount;
-    private String status; // Pending, Verified, Terms Set, Approved, Rejected, Forwarded
+    private double amount; 
+    private String status; 
     private double interestRate;
-    private int repaymentPeriod; // months
+    private int repaymentPeriod; 
     private double installmentAmount;
-    private double paidAmount;
     private double remainingAmount;
+    private double paidAmount;
 
     public Loan(int id, int userId, String vehicleName, double amount, String status) {
         this.id = id;
@@ -22,7 +22,6 @@ public class Loan {
 
     public Loan() {}
 
-    // Getters and Setters
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
     public int getUserId() { return userId; }
@@ -39,8 +38,8 @@ public class Loan {
     public void setRepaymentPeriod(int repaymentPeriod) { this.repaymentPeriod = repaymentPeriod; }
     public double getInstallmentAmount() { return installmentAmount; }
     public void setInstallmentAmount(double installmentAmount) { this.installmentAmount = installmentAmount; }
-    public double getPaidAmount() { return paidAmount; }
-    public void setPaidAmount(double paidAmount) { this.paidAmount = paidAmount; }
     public double getRemainingAmount() { return remainingAmount; }
     public void setRemainingAmount(double remainingAmount) { this.remainingAmount = remainingAmount; }
+    public double getPaidAmount() { return paidAmount; }
+    public void setPaidAmount(double paidAmount) { this.paidAmount = paidAmount; }
 }

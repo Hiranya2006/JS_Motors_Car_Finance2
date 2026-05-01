@@ -6,7 +6,6 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class AdminDashboardActivity extends AppCompatActivity {
-
     private Button btnManageVehicles, btnViewApplications, btnViewSales, btnLogout;
 
     @Override

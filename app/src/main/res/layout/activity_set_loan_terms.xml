@@ -9,16 +9,17 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:background="@color/secondary"
         app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="Configure Terms"
+            app:title="CONFIGURE TERMS"
             app:titleCentered="true"
-            app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge" />
+            app:titleTextColor="@color/primary"
+            app:titleTextAppearance="@style/Carmoola.TitleLarge" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -32,40 +33,43 @@
             android:orientation="vertical"
             android:padding="24dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set Final Terms"
+                android:textAppearance="@style/Carmoola.HeadlineLarge"
+                android:textSize="28sp"
+                android:layout_marginBottom="24dp"/>
+
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="28dp"
+                app:cardCornerRadius="32dp"
                 app:cardElevation="0dp"
-                app:strokeWidth="1dp"
-                app:strokeColor="@color/secondaryContainer"
-                app:cardBackgroundColor="@color/surface">
+                app:strokeWidth="2dp"
+                app:strokeColor="@color/secondary"
+                app:cardBackgroundColor="@color/white">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Loan Structure"
-                        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-                        android:textColor="@color/primary"
-                        android:layout_marginBottom="16dp"/>
+                    android:padding="24dp">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Interest Rate (%)"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                        android:layout_marginBottom="16dp">
+                        android:layout_marginBottom="16dp"
+                        app:boxStrokeColor="@color/secondary"
+                        app:hintTextColor="@color/secondary">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etInterestRate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="numberDecimal"/>
+                            android:inputType="numberDecimal"
+                            android:textColor="@color/secondary"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -73,26 +77,32 @@
                         android:layout_height="wrap_content"
                         android:hint="Repayment Period (Months)"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                        android:layout_marginBottom="16dp">
+                        android:layout_marginBottom="16dp"
+                        app:boxStrokeColor="@color/secondary"
+                        app:hintTextColor="@color/secondary">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etPeriod"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="number"/>
+                            android:inputType="number"
+                            android:textColor="@color/secondary"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Calculated Installment ($)"
+                        android:hint="Calculated Installment (Rs.)"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                        app:boxBackgroundColor="@color/secondaryContainer">
+                        app:boxBackgroundColor="@color/primaryContainer"
+                        app:boxStrokeColor="@color/secondary">
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/etInstallment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="numberDecimal"
-                            android:textStyle="bold"/>
+                            android:textColor="@color/secondary"
+                            android:textStyle="bold"
+                            android:textSize="20sp"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
@@ -102,9 +112,14 @@
                 android:id="@+id/btnConfirmTerms"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                android:text="Finalize &amp; Approve"
+                android:text="FINALIZE &amp; APPROVE"
                 android:layout_marginTop="32dp"
-                app:cornerRadius="16dp"
+                android:layout_marginBottom="48dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                app:cornerRadius="32dp"
+                android:backgroundTint="@color/secondary"
+                android:textColor="@color/primary"
                 style="@style/Widget.Material3.Button" />
 
         </LinearLayout>

@@ -41,7 +41,7 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
         Vehicle v = vehicleList.get(position);
         holder.tvName.setText(v.getName());
         holder.tvSpecs.setText(v.getSpecs());
-        holder.tvPrice.setText("$" + String.format("%.2f", v.getPrice()));
+        holder.tvPrice.setText("Rs. " + String.format("%.2f", v.getPrice()));
         holder.btnAction.setText(actionText);
         
         // Use Glide to load the car image

@@ -3,24 +3,24 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     
-    <!-- Warmer Carmoola-Inspired Palette -->
-    <color name="primary">#FFC107</color> <!-- Amber -->
-    <color name="onPrimary">#3E2723</color> <!-- Deep Brown -->
-    <color name="primaryContainer">#FFECB3</color>
-    <color name="onPrimaryContainer">#3E2723</color>
+    <!-- JS MOTORS 2026 Carmoola Palette -->
+    <color name="primary">#FFC107</color> <!-- Neon Lime -->
+    <color name="onPrimary">#451F01</color> <!-- Midnight Purple -->
+    <color name="primaryContainer">#FF9800</color>
+    <color name="onPrimaryContainer">#451F01</color>
     
-    <color name="secondary">#5D4037</color> <!-- Brown -->
+    <color name="secondary">#451F01</color> <!-- Midnight Purple -->
     <color name="onSecondary">#FFFFFF</color>
-    <color name="secondaryContainer">#D7CCC8</color>
-    <color name="onSecondaryContainer">#3E2723</color>
+    <color name="secondaryContainer">#451F01</color>
+    <color name="onSecondaryContainer">#FFFFFF</color>
     
-    <color name="accent">#FF7043</color> <!-- Coral / Warm Orange -->
+    <color name="accent">#FF3BFF</color> <!-- Neon Pink -->
     
-    <color name="background">#FFFCF5</color> <!-- Warm Cream -->
-    <color name="onBackground">#3E2723</color>
+    <color name="background">#F7F3F9</color>
+    <color name="onBackground">#451F01</color>
     <color name="surface">#FFFFFF</color>
-    <color name="onSurface">#3E2723</color>
+    <color name="onSurface">#451F01</color>
     
-    <color name="error">#E53935</color>
+    <color name="error">#FF4B4B</color>
     <color name="onError">#FFFFFF</color>
 </resources>

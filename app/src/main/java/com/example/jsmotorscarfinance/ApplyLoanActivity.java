@@ -3,7 +3,6 @@ package com.example.jsmotorscarfinance;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -39,9 +38,7 @@ public class ApplyLoanActivity extends AppCompatActivity {
         btnUploadDoc = findViewById(R.id.btnUploadDoc);
         btnSubmitLoan = findViewById(R.id.btnSubmitLoan);
         tvFilePath = findViewById(R.id.tvFilePath);
-        
-        // New UI element for real-time estimation
-        tvMonthlyEstimate = new TextView(this); // Just in case layout didn't have it, but I will update layout too
+        tvMonthlyEstimate = findViewById(R.id.tvMonthlyEstimate);
 
         if (prefilledVehicle != null) {
             etVehicleName.setText(prefilledVehicle);
@@ -62,13 +59,8 @@ public class ApplyLoanActivity extends AppCompatActivity {
         etVehiclePrice.addTextChangedListener(textWatcher);
         etDownPayment.addTextChangedListener(textWatcher);
 
-        btnUploadDoc.setOnClickListener(v -> {
-            simulateDocumentProcessing();
-        });
-
-        btnSubmitLoan.setOnClickListener(v -> {
-            submitApplication();
-        });
+        btnUploadDoc.setOnClickListener(v -> simulateDocumentProcessing());
+        btnSubmitLoan.setOnClickListener(v -> submitApplication());
         
         calculateLoanAndEstimate();
     }
@@ -82,40 +74,31 @@ public class ApplyLoanActivity extends AppCompatActivity {
             if (loanAmount < 0) loanAmount = 0;
             etLoanAmount.setText(String.format(Locale.US, "%.2f", loanAmount));
 
-
             double annualRate = 0.089;
             double monthlyRate = annualRate / 12;
             int months = 60;
             
             if (loanAmount > 0) {
                 double monthlyPayment = (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -months));
-                // Find a way to display this in the layout
-                updateEstimateUI(monthlyPayment);
+                tvMonthlyEstimate.setText(String.format(Locale.US, "Estimated: Rs %,.2f /mo", monthlyPayment));
+            } else {
+                tvMonthlyEstimate.setText("Estimated: Rs 0.00 /mo");
             }
         } catch (NumberFormatException e) {
             etLoanAmount.setText("0.00");
         }
     }
 
-    private void updateEstimateUI(double monthlyPayment) {
-        TextView tvEstimate = findViewById(R.id.tvMonthlyEstimate);
-        if (tvEstimate != null) {
-            tvEstimate.setText(String.format(Locale.US, "Estimated: $%.2f /mo", monthlyPayment));
-        }
-    }
-
     private void simulateDocumentProcessing() {
         btnUploadDoc.setEnabled(false);
         btnUploadDoc.setText("Scanning Documents...");
-        
-
         tvFilePath.postDelayed(() -> {
             isDocUploaded = true;
             btnUploadDoc.setEnabled(true);
             btnUploadDoc.setText("ID Verified ✓");
-            tvFilePath.setText("Identity & Income Verified via Open Banking");
+            tvFilePath.setText("Verified via Open Banking");
             tvFilePath.setTextColor(getResources().getColor(R.color.primary));
-            Toast.makeText(this, "Instant Verification Successful", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Verification Successful", Toast.LENGTH_SHORT).show();
         }, 1500);
     }
 
@@ -137,22 +120,18 @@ public class ApplyLoanActivity extends AppCompatActivity {
         loan.setUserId(userId);
         loan.setVehicleName(vehicle);
         loan.setAmount(Double.parseDouble(amountStr));
-        loan.setStatus("Pending Approval");
+        loan.setStatus("Pending");
 
         long loanId = dbHelper.applyLoan(loan);
         if (loanId != -1) {
-            dbHelper.uploadDocument((int) loanId, "Verification Package", "verified_token_v4");
-            
-            // Simulation of "Instant Decision"
             btnSubmitLoan.setText("Decision in progress...");
             btnSubmitLoan.setEnabled(false);
-            
             btnSubmitLoan.postDelayed(() -> {
-                Toast.makeText(this, "Congratulations! Your application is Pre-Approved!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "JS MOTORS: Application Pre-Approved!", Toast.LENGTH_LONG).show();
                 finish();
             }, 2000);
         } else {
-            Toast.makeText(this, "System busy, try again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Submission Error", Toast.LENGTH_SHORT).show();
         }
     }
 }
