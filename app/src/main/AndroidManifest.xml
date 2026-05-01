@@ -35,6 +35,8 @@
         <activity android:name=".ViewPaymentsActivity" />
         <activity android:name=".ProfileActivity" />
         
+        <activity android:name=".ViewSalesActivity" />
+
     </application>
 
 </manifest>

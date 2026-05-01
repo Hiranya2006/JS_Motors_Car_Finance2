@@ -9,6 +9,7 @@ import com.example.jsmotorscarfinance.models.Loan;
 import com.example.jsmotorscarfinance.models.User;
 import com.example.jsmotorscarfinance.models.Vehicle;
 import com.example.jsmotorscarfinance.models.Payment;
+import com.example.jsmotorscarfinance.models.Sale;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "JSMotors.db";
     private static final int DATABASE_VERSION = 8;
+
     private static final String TABLE_USER = "user";
     private static final String TABLE_ADMIN = "admin";
     private static final String TABLE_AGENT = "agent";
@@ -60,6 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_LOAN_APP_REPAYMENT_PERIOD = "repaymentPeriod";
     private static final String KEY_LOAN_APP_MONTHLY_INSTALLMENT = "monthlyInstallment";
     private static final String KEY_LOAN_APP_STATUS = "status";
+    
     private static final String KEY_PAYMENT_ID = "paymentid";
     private static final String KEY_PAYMENT_USER_ID = "userid";
     private static final String KEY_PAYMENT_AMOUNT = "amount";
@@ -383,5 +386,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         c.close();
         return list;
+    }
+
+    public List<Sale> getAllSales() {
+        List<Sale> sales = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT u.name, v.Model, c.totalPrice FROM " + TABLE_LOAN_APPLICATION + " la " +
+                "JOIN " + TABLE_CUSTOMER_DB + " c ON la.customerid = c.customerid " +
+                "JOIN " + TABLE_USER + " u ON c.userid = u.userid " +
+                "JOIN " + TABLE_VEHICLE_RECORDS + " v ON c.vehicleid = v.vehicleid " +
+                "WHERE la.status = 'Approved'";
+        Cursor c = db.rawQuery(query, null);
+        if (c.moveToFirst()) {
+            do {
+                sales.add(new Sale(c.getString(0), c.getString(1), c.getDouble(2)));
+            } while (c.moveToNext());
+        }
+        c.close();
+        return sales;
     }
 }
