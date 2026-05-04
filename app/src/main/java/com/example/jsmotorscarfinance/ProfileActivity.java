@@ -1,3 +1,4 @@
+// Profile Activity: Allows users to view and update their personal account information
 package com.example.jsmotorscarfinance;
 
 import android.os.Bundle;
@@ -16,6 +17,7 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private int userId;
 
+    // Initializes the profile screen and sets up the toolbar
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
         btnSave.setOnClickListener(v -> saveProfile());
     }
 
+    // Fetches the current user's data from the database and populates the fields
     private void loadUserData() {
         User user = dbHelper.getUserById(userId);
         if (user != null) {
@@ -49,6 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    // Validates and saves the updated profile information to the database
     private void saveProfile() {
         String name = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();

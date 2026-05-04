@@ -27,6 +27,7 @@ public class MakePaymentActivity extends AppCompatActivity {
     private RecyclerView rvPayments;
     private double currentBalance = 0.0;
 
+    // Initializes UI components and loads initial data
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +48,7 @@ public class MakePaymentActivity extends AppCompatActivity {
         btnPay.setOnClickListener(v -> processPayment());
     }
 
+    // Fetches loan balance and payment history from database
     private void loadData() {
         // Load Balance
         List<Loan> loans = dbHelper.getLoansByUser(userId);
@@ -82,6 +84,7 @@ public class MakePaymentActivity extends AppCompatActivity {
         rvPayments.setAdapter(new PaymentAdapter(payments));
     }
 
+    // Validates and saves a new payment transaction
     private void processPayment() {
         String amtStr = etAmount.getText().toString().trim();
         if (amtStr.isEmpty()) {

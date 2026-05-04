@@ -1,3 +1,4 @@
+// Manage Vehicles Activity: Admin tool for controlling the car inventory and images
 package com.example.jsmotorscarfinance;
 
 import android.content.Intent;
@@ -35,6 +36,7 @@ public class ManageVehiclesActivity extends AppCompatActivity {
     private String currentBase64Image = "";
     private ImageView ivDialogPreview;
 
+    // Registers the system gallery picker and handles the returned image data
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
@@ -45,6 +47,7 @@ public class ManageVehiclesActivity extends AppCompatActivity {
             }
     );
 
+    // Initializes the management screen and sets up UI listeners
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,18 +63,19 @@ public class ManageVehiclesActivity extends AppCompatActivity {
         fabAdd.setOnClickListener(v -> showVehicleDialog(null));
     }
 
+    // Refreshes the fleet list by pulling the latest records from SQLite
     private void loadVehicles() {
         List<Vehicle> list = dbHelper.getAllVehicles();
         adapter = new VehicleAdapter(list, "Edit", this::showVehicleDialog);
         rvVehicles.setAdapter(adapter);
     }
 
+    // Handles picking, resizing, and Base64 encoding car images for the database
     private void processAndSetImage(Uri uri) {
         try {
             InputStream inputStream = getContentResolver().openInputStream(uri);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             
-            // Resize image to keep DB small
             Bitmap resized = Bitmap.createScaledBitmap(bitmap, 800, 600, true);
             
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -81,13 +85,14 @@ public class ManageVehiclesActivity extends AppCompatActivity {
             
             if (ivDialogPreview != null) {
                 ivDialogPreview.setImageBitmap(resized);
-                ivDialogPreview.setColorFilter(0); // Clear tint
+                ivDialogPreview.setColorFilter(0); 
             }
         } catch (Exception e) {
             Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
         }
     }
 
+    // Displays the modern dialog for adding new cars or updating existing ones
     private void showVehicleDialog(Vehicle vehicle) {
         currentBase64Image = (vehicle != null) ? vehicle.getImageUrl() : "";
         

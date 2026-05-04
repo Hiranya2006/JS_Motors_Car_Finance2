@@ -1,3 +1,4 @@
+// Set Loan Terms Activity: Allows Finance Agents to define final interest rates and installments
 package com.example.jsmotorscarfinance;
 
 import android.os.Bundle;
@@ -19,6 +20,7 @@ public class SetLoanTermsActivity extends AppCompatActivity {
     private int loanId;
     private double principalAmount = 0;
 
+    // Initializes the underwriting screen and sets up data listeners
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +29,6 @@ public class SetLoanTermsActivity extends AppCompatActivity {
         dbHelper = new DatabaseHelper(this);
         loanId = getIntent().getIntExtra("LOAN_ID", -1);
         
-        // Fetch the original loan amount to calculate installments
         loadLoanData();
 
         etRate = findViewById(R.id.etInterestRate);
@@ -35,7 +36,6 @@ public class SetLoanTermsActivity extends AppCompatActivity {
         etInstallment = findViewById(R.id.etInstallment);
         btnConfirm = findViewById(R.id.btnConfirmTerms);
 
-        // Add auto-calculation logic
         TextWatcher calculator = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -55,8 +55,8 @@ public class SetLoanTermsActivity extends AppCompatActivity {
         });
     }
 
+    // Loads the requested loan amount from the database for calculation
     private void loadLoanData() {
-        // Find the loan amount from the DB
         for (Loan l : dbHelper.getAllLoans()) {
             if (l.getId() == loanId) {
                 principalAmount = l.getAmount();
@@ -65,6 +65,7 @@ public class SetLoanTermsActivity extends AppCompatActivity {
         }
     }
 
+    // Automatically derives the monthly Rs. payment based on interest and period
     private void calculateInstallment() {
         try {
             String rateStr = etRate.getText().toString();
@@ -92,6 +93,7 @@ public class SetLoanTermsActivity extends AppCompatActivity {
         }
     }
 
+    // Saves the finalized contract terms and updates the loan status to Approved
     private void saveTerms() {
         String rateStr = etRate.getText().toString();
         String periodStr = etPeriod.getText().toString();

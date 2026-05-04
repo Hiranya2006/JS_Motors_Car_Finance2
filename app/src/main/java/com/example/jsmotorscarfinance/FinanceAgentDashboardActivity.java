@@ -1,3 +1,4 @@
+// Finance Agent Dashboard Activity: Workspace for agents to review and finalize loan applications
 package com.example.jsmotorscarfinance;
 
 import android.content.Intent;
@@ -20,6 +21,7 @@ public class FinanceAgentDashboardActivity extends AppCompatActivity implements 
     private DatabaseHelper dbHelper;
     private Button btnLogoutAgent, btnViewPaymentsAgent;
 
+    // Initializes the agent dashboard and sets up the application queue
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,12 +45,14 @@ public class FinanceAgentDashboardActivity extends AppCompatActivity implements 
         });
     }
 
+    // Fetches all loan applications for the agent to review
     private void loadApplications() {
         List<Loan> loanList = dbHelper.getAllLoans();
         adapter = new LoanAdapter(loanList, "Finance Agent", this);
         rvAgentLoans.setAdapter(adapter);
     }
 
+    // Opens the terms configuration screen for the selected loan
     @Override
     public void onApprove(Loan loan) {
         Intent intent = new Intent(this, SetLoanTermsActivity.class);
@@ -56,6 +60,7 @@ public class FinanceAgentDashboardActivity extends AppCompatActivity implements 
         startActivity(intent);
     }
 
+    // Rejects the loan application and updates its status in the database
     @Override
     public void onReject(Loan loan) {
         dbHelper.updateLoanStatus(loan.getId(), "Rejected by Agent");
@@ -63,6 +68,7 @@ public class FinanceAgentDashboardActivity extends AppCompatActivity implements 
         loadApplications();
     }
 
+    // Refreshes the application list when the activity is resumed
     @Override
     protected void onResume() {
         super.onResume();

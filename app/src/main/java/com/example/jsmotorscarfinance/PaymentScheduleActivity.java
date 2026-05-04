@@ -1,3 +1,4 @@
+// Payment Schedule Activity: Generates and displays a detailed repayment timeline for approved loans
 package com.example.jsmotorscarfinance;
 
 import android.content.Intent;
@@ -24,6 +25,7 @@ public class PaymentScheduleActivity extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private int userId;
 
+    // Initializes the activity, sets up the toolbar and summary views
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +47,14 @@ public class PaymentScheduleActivity extends AppCompatActivity {
         rvSchedule.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    // Refreshes the loan data whenever the screen becomes visible
     @Override
     protected void onResume() {
         super.onResume();
         loadLoanDetails();
     }
 
+    // Retrieves approved loan terms and generates the installment list
     private void loadLoanDetails() {
         List<Loan> loans = dbHelper.getLoansByUser(userId);
         if (!loans.isEmpty()) {
@@ -73,6 +77,7 @@ public class PaymentScheduleActivity extends AppCompatActivity {
         }
     }
 
+    // Adapter class to manage the individual rows of the payment schedule table
     private class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ViewHolder> {
         private List<String> data;
         private double amount;
@@ -100,9 +105,8 @@ public class PaymentScheduleActivity extends AppCompatActivity {
             holder.tvDueDate.setText(String.format(Locale.getDefault(), "%d-%02d-15", year, month));
             holder.tvPaymentAmount.setText(String.format(Locale.getDefault(), "Rs %,.2f", amount));
             
-            // Check if this installment is covered by totalPaid
             double requiredToCoverThis = (position + 1) * amount;
-            if (totalPaid >= requiredToCoverThis - 0.01) { // small delta for double precision
+            if (totalPaid >= requiredToCoverThis - 0.01) { 
                 holder.btnPayItem.setText("PAID");
                 holder.btnPayItem.setEnabled(false);
                 holder.btnPayItem.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));

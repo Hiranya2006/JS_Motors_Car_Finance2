@@ -1,3 +1,4 @@
+// Apply Loan Activity: High-speed finance application with real-time estimation
 package com.example.jsmotorscarfinance;
 
 import android.os.Bundle;
@@ -21,6 +22,7 @@ public class ApplyLoanActivity extends AppCompatActivity {
     private int userId;
     private boolean isDocUploaded = false;
 
+    // Sets up the activity, initializes views, and starts real-time listeners
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,7 @@ public class ApplyLoanActivity extends AppCompatActivity {
         calculateLoanAndEstimate();
     }
 
+    // Performs real-time calculation of loan principal and monthly installments
     private void calculateLoanAndEstimate() {
         try {
             double price = etVehiclePrice.getText().toString().isEmpty() ? 0 : Double.parseDouble(etVehiclePrice.getText().toString());
@@ -89,6 +92,7 @@ public class ApplyLoanActivity extends AppCompatActivity {
         }
     }
 
+    // Simulates an automated identity and income verification process
     private void simulateDocumentProcessing() {
         btnUploadDoc.setEnabled(false);
         btnUploadDoc.setText("Scanning Documents...");
@@ -102,6 +106,7 @@ public class ApplyLoanActivity extends AppCompatActivity {
         }, 1500);
     }
 
+    // Submits the loan application and triggers the pre-approval simulation
     private void submitApplication() {
         String vehicle = etVehicleName.getText().toString().trim();
         String amountStr = etLoanAmount.getText().toString().trim();
@@ -120,7 +125,7 @@ public class ApplyLoanActivity extends AppCompatActivity {
         loan.setUserId(userId);
         loan.setVehicleName(vehicle);
         loan.setAmount(Double.parseDouble(amountStr));
-        loan.setStatus("Pending");
+        loan.setStatus("Pending Approval");
 
         long loanId = dbHelper.applyLoan(loan);
         if (loanId != -1) {

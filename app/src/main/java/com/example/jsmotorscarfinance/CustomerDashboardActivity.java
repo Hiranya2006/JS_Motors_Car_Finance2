@@ -1,3 +1,4 @@
+// Customer Dashboard Activity: High-level overview and navigation hub for car finance customers
 package com.example.jsmotorscarfinance;
 
 import android.content.Intent;
@@ -18,6 +19,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
     private int userId;
     private DatabaseHelper dbHelper;
 
+    // Initializes the dashboard and sets up the primary user navigation tiles
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +39,14 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         setupClickListeners();
     }
 
+    // Refreshes the welcome message and interactive button states upon returning to the screen
     @Override
     protected void onResume() {
         super.onResume();
         refreshUI();
     }
 
+    // Updates the UI text and enables/disables features based on the latest loan approval status
     private void refreshUI() {
         User user = dbHelper.getUserById(userId);
         if (user != null && user.getName() != null) {
@@ -50,11 +54,11 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         }
         
         boolean isApproved = isLoanApproved();
-        // Visual feedback: dim buttons if loan is not yet approved
         btnMakePayment.setAlpha(isApproved ? 1.0f : 0.5f);
         btnPaymentPlan.setAlpha(isApproved ? 1.0f : 0.5f);
     }
 
+    // Logic to determine if the user has an active, approved finance plan
     private boolean isLoanApproved() {
         List<Loan> loans = dbHelper.getLoansByUser(userId);
         if (loans != null && !loans.isEmpty()) {
@@ -64,6 +68,7 @@ public class CustomerDashboardActivity extends AppCompatActivity {
         return false;
     }
 
+    // Configures the redirection logic for all dashboard interaction tiles
     private void setupClickListeners() {
         btnBrowse.setOnClickListener(v -> {
             Intent intent = new Intent(this, BrowseVehiclesActivity.class);

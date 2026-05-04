@@ -1,3 +1,4 @@
+// Loan Adapter: Bridges the loan data from SQLite to the modern card UI items
 package com.example.jsmotorscarfinance.adapters;
 
 import android.content.Context;
@@ -19,17 +20,20 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.LoanViewHolder
     private final String userRole;
     private final OnLoanActionListener actionListener;
 
+    // Interface to delegate loan approval and rejection actions to the host Activity
     public interface OnLoanActionListener {
         void onApprove(Loan loan);
         void onReject(Loan loan);
     }
 
+    // Constructor to initialize the adapter with data and role context
     public LoanAdapter(List<Loan> loanList, String userRole, OnLoanActionListener actionListener) {
         this.loanList = loanList;
         this.userRole = userRole;
         this.actionListener = actionListener;
     }
 
+    // Inflates the custom loan item layout when the RecyclerView creates a new row
     @NonNull
     @Override
     public LoanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,6 +41,7 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.LoanViewHolder
         return new LoanViewHolder(view);
     }
 
+    // Binds loan data to UI elements and handles role-based visibility for control buttons
     @Override
     public void onBindViewHolder(@NonNull LoanViewHolder holder, int position) {
         Loan loan = loanList.get(position);
@@ -66,11 +71,13 @@ public class LoanAdapter extends RecyclerView.Adapter<LoanAdapter.LoanViewHolder
         }
     }
 
+    // Returns the total number of loans in the list
     @Override
     public int getItemCount() {
         return loanList.size();
     }
 
+    // ViewHolder class to optimize UI performance by caching view references
     public static class LoanViewHolder extends RecyclerView.ViewHolder {
         TextView tvVehicleName, tvLoanAmount, tvStatus;
         LinearLayout adminControls;

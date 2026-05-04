@@ -1,3 +1,4 @@
+// View Status Activity: Displays a list of loan applications for both customers and admins
 package com.example.jsmotorscarfinance;
 
 import android.os.Bundle;
@@ -18,6 +19,7 @@ public class ViewStatusActivity extends AppCompatActivity implements LoanAdapter
     private int userId;
     private boolean isAdmin;
 
+    // Initializes the activity and sets up the loan list view
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,7 @@ public class ViewStatusActivity extends AppCompatActivity implements LoanAdapter
         loadLoans();
     }
 
+    // Fetches loans from the database based on user role and updates the UI
     private void loadLoans() {
         List<Loan> loanList;
         if (isAdmin) {
@@ -45,6 +48,7 @@ public class ViewStatusActivity extends AppCompatActivity implements LoanAdapter
         rvLoans.setAdapter(adapter);
     }
 
+    // Handles the approval action for a loan application (Admin only)
     @Override
     public void onApprove(Loan loan) {
         if (isAdmin) {
@@ -54,6 +58,7 @@ public class ViewStatusActivity extends AppCompatActivity implements LoanAdapter
         }
     }
 
+    // Handles the rejection action for a loan application (Admin only)
     @Override
     public void onReject(Loan loan) {
         if (isAdmin) {

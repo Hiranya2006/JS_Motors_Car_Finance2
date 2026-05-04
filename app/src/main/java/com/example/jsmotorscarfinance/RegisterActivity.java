@@ -1,3 +1,4 @@
+// Register Activity: Manages new user account creation and input validation
 package com.example.jsmotorscarfinance;
 
 import android.content.Intent;
@@ -20,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView tvLogin;
     private DatabaseHelper dbHelper;
 
+    // Initializes the registration screen and connects UI components
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         tvLogin.setOnClickListener(v -> finish());
     }
 
+    // Validates that all input fields meet the required criteria
     private boolean validateInputs() {
         String name = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
@@ -87,6 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
         return isValid;
     }
 
+    // Saves the validated user data to the database and redirects to login
     private void performRegistration() {
         String name = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();

@@ -1,3 +1,4 @@
+// Admin Dashboard Activity: Central control hub for system administrators
 package com.example.jsmotorscarfinance;
 
 import android.content.Intent;
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AdminDashboardActivity extends AppCompatActivity {
     private Button btnManageVehicles, btnViewApplications, btnViewSales, btnLogout;
 
+    // Initializes the dashboard and sets up navigation listeners
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

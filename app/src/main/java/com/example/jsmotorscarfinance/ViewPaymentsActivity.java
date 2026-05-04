@@ -1,3 +1,4 @@
+// View Payments Activity: Allows administrators to monitor all incoming customer payments
 package com.example.jsmotorscarfinance;
 
 import android.os.Bundle;
@@ -19,6 +20,7 @@ public class ViewPaymentsActivity extends AppCompatActivity {
     private RecyclerView rvAllPayments;
     private DatabaseHelper dbHelper;
 
+    // Initializes the global payment tracking screen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,11 +33,13 @@ public class ViewPaymentsActivity extends AppCompatActivity {
         loadPayments();
     }
 
+    // Fetches the entire payment history from the database for administrative review
     private void loadPayments() {
         List<Payment> payments = dbHelper.getAllPayments();
         rvAllPayments.setAdapter(new PaymentsAdapter(payments));
     }
 
+    // Inner class Adapter to manage the list of all system payments
     private static class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHolder> {
         private List<Payment> payments;
 
@@ -53,7 +57,7 @@ public class ViewPaymentsActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             Payment p = payments.get(position);
-            holder.tvName.setText("User ID: " + p.getUserId()); // In a real app, join with user table for name
+            holder.tvName.setText("User ID: " + p.getUserId()); 
             holder.tvDate.setText("Date: " + p.getDate());
             holder.tvAmount.setText(String.format(Locale.getDefault(), "Rs %,.2f", p.getAmount()));
         }

@@ -1,3 +1,4 @@
+// View Sales Activity: Provides administrators with a detailed report of all successful vehicle sales
 package com.example.jsmotorscarfinance;
 
 import android.os.Bundle;
@@ -20,6 +21,7 @@ public class ViewSalesActivity extends AppCompatActivity {
     private TextView tvTotalSalesCount;
     private DatabaseHelper dbHelper;
 
+    // Initializes the sales report screen and UI components
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +36,14 @@ public class ViewSalesActivity extends AppCompatActivity {
         loadSales();
     }
 
+    // Fetches all approved sales records from the database and updates the display
     private void loadSales() {
         List<Sale> sales = dbHelper.getAllSales();
         tvTotalSalesCount.setText(String.valueOf(sales.size()));
         rvSales.setAdapter(new SalesAdapter(sales));
     }
 
+    // Inner class Adapter to manage the display of individual sales items
     private static class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder> {
         private List<Sale> sales;
 
@@ -50,7 +54,6 @@ public class ViewSalesActivity extends AppCompatActivity {
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            // Reusing item_admin_payment layout as it has the same fields needed
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_admin_payment, parent, false);
             return new ViewHolder(v);
         }
@@ -73,8 +76,8 @@ public class ViewSalesActivity extends AppCompatActivity {
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 tvCustomerName = itemView.findViewById(R.id.tvAdminCustomerName);
-                tvCarModel = itemView.findViewById(R.id.tvAdminPaymentDate); // Reusing ID for Car Model
-                tvPrice = itemView.findViewById(R.id.tvAdminPaymentAmount); // Reusing ID for Price
+                tvCarModel = itemView.findViewById(R.id.tvAdminPaymentDate);
+                tvPrice = itemView.findViewById(R.id.tvAdminPaymentAmount);
             }
         }
     }

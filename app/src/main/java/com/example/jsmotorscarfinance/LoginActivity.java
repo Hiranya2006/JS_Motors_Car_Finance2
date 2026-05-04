@@ -1,3 +1,4 @@
+// Login Activity: Handles user authentication and role-based redirection
 package com.example.jsmotorscarfinance;
 
 import android.content.Intent;
@@ -48,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
                 } else if ("Finance Agent".equalsIgnoreCase(role)) {
                     intent = new Intent(this, FinanceAgentDashboardActivity.class);
                 } else {
-                    // Default to Customer Dashboard for all other cases
                     intent = new Intent(this, CustomerDashboardActivity.class);
                 }
 

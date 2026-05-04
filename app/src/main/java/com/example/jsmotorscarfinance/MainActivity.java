@@ -1,3 +1,4 @@
+// Main Entry Activity: Redirects to login or handles initial splash
 package com.example.jsmotorscarfinance;
 
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Initializes the main activity and sets up edge-to-edge display
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

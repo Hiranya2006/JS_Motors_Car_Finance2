@@ -1,3 +1,4 @@
+// Vehicle Adapter: Bridges the car inventory data from SQLite to the gallery UI items
 package com.example.jsmotorscarfinance.adapters;
 
 import android.view.LayoutInflater;
@@ -19,16 +20,19 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
     private OnVehicleClickListener listener;
     private String actionText;
 
+    // Interface to handle user interactions with specific vehicle items
     public interface OnVehicleClickListener {
         void onVehicleClick(Vehicle vehicle);
     }
 
+    // Constructor to initialize the vehicle adapter with data and button text
     public VehicleAdapter(List<Vehicle> vehicleList, String actionText, OnVehicleClickListener listener) {
         this.vehicleList = vehicleList;
         this.actionText = actionText;
         this.listener = listener;
     }
 
+    // Inflates the vehicle card layout when a new row is created
     @NonNull
     @Override
     public VehicleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -36,6 +40,7 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
         return new VehicleViewHolder(v);
     }
 
+    // Binds vehicle details and images to the UI using the Glide library
     @Override
     public void onBindViewHolder(@NonNull VehicleViewHolder holder, int position) {
         Vehicle v = vehicleList.get(position);
@@ -44,7 +49,7 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
         holder.tvPrice.setText("Rs. " + String.format("%.2f", v.getPrice()));
         holder.btnAction.setText(actionText);
         
-        // Use Glide to load the car image
+        // Dynamically loads the car image from URL or Base64 binary data
         if (v.getImageUrl() != null && !v.getImageUrl().isEmpty()) {
             Glide.with(holder.itemView.getContext())
                     .load(v.getImageUrl())
@@ -58,11 +63,13 @@ public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.VehicleV
         holder.btnAction.setOnClickListener(view -> listener.onVehicleClick(v));
     }
 
+    // Returns the current count of vehicles in the inventory list
     @Override
     public int getItemCount() {
         return vehicleList.size();
     }
 
+    // ViewHolder class to cache UI references and improve list scrolling performance
     static class VehicleViewHolder extends RecyclerView.ViewHolder {
         TextView tvName, tvSpecs, tvPrice;
         ImageView ivVehicle;

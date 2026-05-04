@@ -1,3 +1,4 @@
+// Browse Vehicles Activity: Allows customers to explore the available car inventory
 package com.example.jsmotorscarfinance;
 
 import android.content.Intent;
@@ -16,6 +17,7 @@ public class BrowseVehiclesActivity extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private int userId;
 
+    // Initializes the activity and sets up the car list view
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +31,7 @@ public class BrowseVehiclesActivity extends AppCompatActivity {
         loadVehicles();
     }
 
+    // Retrieves all cars from the database and binds them to the gallery adapter
     private void loadVehicles() {
         List<Vehicle> list = dbHelper.getAllVehicles();
         VehicleAdapter adapter = new VehicleAdapter(list, "Apply for Loan", vehicle -> {

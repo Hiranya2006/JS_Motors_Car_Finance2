@@ -18,10 +18,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "JSMotors.db";
     private static final int DATABASE_VERSION = 11;
 
+    // Constructor to initialize the database helper
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    // Creates the database schema and all necessary tables
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE user(userid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT UNIQUE, password TEXT)");
@@ -35,6 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         seedInitialData(db);
     }
 
+    // Populates the database with initial administrative and vehicle data
     private void seedInitialData(SQLiteDatabase db) {
         ContentValues adminValues = new ContentValues();
         adminValues.put("password", "admin123");
@@ -46,11 +49,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         agentValues.put("bank", "JS Finance");
         db.insert("agent", null, agentValues);
         
-        // Seed some initial cars
         insertVehicle(db, "Toyota Camry 2026", 32000, "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?q=80&w=2070&auto=format&fit=crop");
         insertVehicle(db, "Honda Civic 2026", 28000, "https://images.unsplash.com/photo-1599912027806-cfec9f5944b6?q=80&w=2070&auto=format&fit=crop");
     }
 
+    // Helper method to insert a new vehicle record during initialization
     private void insertVehicle(SQLiteDatabase db, String model, double price, String imageUrl) {
         ContentValues v = new ContentValues();
         v.put("Model", model);
@@ -61,6 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert("vehicle_records", null, v);
     }
 
+    // Manages database upgrades and schema migrations
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS user");
@@ -74,6 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // Records a new customer account in the user table
     public long registerUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues v = new ContentValues();
@@ -83,6 +88,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert("user", null, v);
     }
 
+    // Retrieves a specific user's details using their unique ID
     public User getUserById(int userId) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query("user", null, "userid=?", new String[]{String.valueOf(userId)}, null, null, null);
@@ -94,6 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    // Updates an existing user's profile details
     public int updateUser(int userId, String name, String email, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues v = new ContentValues();
@@ -103,6 +110,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.update("user", v, "userid=?", new String[]{String.valueOf(userId)});
     }
 
+    // Authenticates a user and identifies their specific role
     public User loginUser(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.query("user", null, "email=? AND password=?", new String[]{email, password}, null, null, null);
@@ -128,6 +136,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return null;
     }
 
+    // Returns a list of all available car records
     public List<Vehicle> getAllVehicles() {
         List<Vehicle> list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -147,6 +156,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
+    // Adds a new car entry to the vehicle_records table
     public long addVehicle(Vehicle v) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -158,6 +168,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert("vehicle_records", null, values);
     }
 
+    // Updates car details such as model, price, and image
     public void updateVehicle(Vehicle v) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -167,11 +178,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update("vehicle_records", values, "vehicleid=?", new String[]{String.valueOf(v.getId())});
     }
 
+    // Deletes a car from the inventory by its ID
     public void deleteVehicle(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("vehicle_records", "vehicleid=?", new String[]{String.valueOf(id)});
     }
 
+    // Saves a customer's loan application to the database
     public long applyLoan(Loan loan) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -191,6 +204,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert("loan_application", null, v);
     }
 
+    // Retrieves every loan application stored in the system
     public List<Loan> getAllLoans() {
         List<Loan> loans = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -205,6 +219,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return loans;
     }
 
+    // Fetches all loan applications linked to a specific user ID
     public List<Loan> getLoansByUser(int userId) {
         List<Loan> loans = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -224,6 +239,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return loans;
     }
 
+    // Updates the workflow status of a specific loan application
     public void updateLoanStatus(int loanId, String status) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues v = new ContentValues();
@@ -231,6 +247,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update("loan_application", v, "applicationid=?", new String[]{String.valueOf(loanId)});
     }
 
+    // Sets the final financial terms and approves a loan application
     public void setLoanTerms(int loanId, double rate, int period, double installment) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues v = new ContentValues();
@@ -240,11 +257,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         v.put("status", "Approved");
         db.update("loan_application", v, "applicationid=?", new String[]{String.valueOf(loanId)});
         
-        // Also update the total to pay based on installments
         double total = installment * period;
         db.execSQL("UPDATE customer_db SET totalPrice = ?, paymentLeft = ? WHERE customerid = (SELECT customerid FROM loan_application WHERE applicationid = ?)", new Object[]{total, total, loanId});
     }
 
+    // Records a payment and automatically updates the remaining loan balance
     public long addPayment(Payment p) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues v = new ContentValues();
@@ -258,6 +275,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return pid;
     }
 
+    // Returns the payment transaction history for a specific customer
     public List<Payment> getPaymentsByUser(int userId) {
         List<Payment> list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -271,6 +289,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
+    // Fetches all payments recorded in the system for admin reporting
     public List<Payment> getAllPayments() {
         List<Payment> list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -284,6 +303,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
+    // Generates a report of all successful vehicle sales and total prices
     public List<Sale> getAllSales() {
         List<Sale> sales = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
@@ -302,6 +322,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return sales;
     }
 
+    // Returns a list of verification documents associated with a loan ID
     public List<String> getDocumentsForLoan(int loanId) {
         List<String> docs = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
